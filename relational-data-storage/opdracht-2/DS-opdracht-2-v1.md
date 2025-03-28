@@ -13,7 +13,7 @@ erDiagram
     SUPPLIERS ||--|{ CONTACTS : ""
     CONTACTS }|--|| DEPARTMENTS : ""
 
-    MEMBERTYPES }|--|| SUPPLIERS : ""
+    MEMBERTYPES ||--|{ SUPPLIERS : ""
 
     HITCOUNT }|--|| SUPPLIERS : ""
     
