@@ -11,6 +11,7 @@
 * Verkeerde karaktersymbolen (bijv. \&euml; i.p.v. ë)
 * Landen foutief toegevoegd aan DISTRICTS
 * Velden die foutief leeg of 0 kunnen zijn (zie vooral SUPPLIERS)
+* Verkeerde primary en foreign keys
 
 
 ### Stappen om data integriteit te verbeteren
@@ -54,3 +55,7 @@
     * Landen in DISTRICTS
 
 * Maak de nodige velden verplicht (zoals straatnaam en huisnummer?)
+
+* Pas verkeerde primary en foreign keys aan en verwijder de overbodige
+    * HITCOUNT -> te veel primary keys
+    * LAT_LONG -> verkeerde foreign key, deze moet verplaatst worden naar SUPPLIERS
