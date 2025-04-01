@@ -18,6 +18,10 @@ INSERT INTO mhl_communes (id)
      VALUES (0);
 INSERT INTO mhl_districts (id)
      VALUES (0);
+INSERT INTO mhl_countries (id)
+     VALUES (0);
+INSERT INTO mhl_membertypes (id)
+     VALUES (0);
 
 SET SESSION sql_mode = '';
 
@@ -112,6 +116,11 @@ ALTER TABLE mhl_suppliers ADD FOREIGN KEY (company) REFERENCES mhl_companies(id)
 
 -- MEMBERTYPES --
 
+UPDATE mhl_suppliers
+   SET membertype=0
+ WHERE mhl_suppliers.membertype NOT IN (SELECT id FROM mhl_membertypes)
+    OR mhl_suppliers.membertype IS NULL;
+
 ALTER TABLE mhl_suppliers ADD FOREIGN KEY (membertype) REFERENCES mhl_membertypes(id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 
@@ -138,3 +147,10 @@ UPDATE mhl_communes
     OR mhl_communes.district_ID IS NULL;
 
 ALTER TABLE mhl_communes ADD FOREIGN KEY (district_ID) REFERENCES mhl_districts(id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+UPDATE mhl_districts
+   SET country_ID=0
+ WHERE mhl_districts.country_ID NOT IN (SELECT id FROM mhl_countries)
+    OR mhl_districts.country_ID IS NULL;
+
+ALTER TABLE mhl_districts ADD FOREIGN KEY (country_ID) REFERENCES mhl_countries(id) ON DELETE RESTRICT ON UPDATE CASCADE;
