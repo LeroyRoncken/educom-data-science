@@ -1138,9 +1138,63 @@ jq "
 ```
 
 
-<!-- ### Opdracht 5 -->
-<!-- Schrijf een query/verzin een oplossing die per continent het percentage groei ten opzichte van 1970 weergeeft. -->
+### Opdracht 5
+Schrijf een query/verzin een oplossing die per continent het percentage groei ten opzichte van 1970 weergeeft.
 
 ```
-
+jq "
+  group_by(.continent) |
+  map({
+    continent: .[0].continent,
+    population_2022: map(.population_2022) | add,
+    population_1970: map(.population_1970) | add,
+    growth_percentage_1970_to_2022: (
+      (
+        (map(.population_2022) | add) - (map(.population_1970) | add)
+      ) / (map(.population_1970) | add) * 100
+    )
+  })
+" < world-population.json > DS-JSON-query-5-output.json
 ```
+
+```json
+[
+  {
+    "continent": "Africa",
+    "population_2022": 1426730932,
+    "population_1970": 365444348,
+    "growth_percentage_1970_to_2022": 290.4099050397682
+  },
+  {
+    "continent": "Asia",
+    "population_2022": 4721383274,
+    "population_1970": 2144906290,
+    "growth_percentage_1970_to_2022": 120.12072490122634
+  },
+  {
+    "continent": "Europe",
+    "population_2022": 743147538,
+    "population_1970": 655923991,
+    "growth_percentage_1970_to_2022": 13.29781319128484
+  },
+  {
+    "continent": "North America",
+    "population_2022": 600296136,
+    "population_1970": 315434606,
+    "growth_percentage_1970_to_2022": 90.30763415983597
+  },
+  {
+    "continent": "Oceania",
+    "population_2022": 45038554,
+    "population_1970": 19480270,
+    "growth_percentage_1970_to_2022": 131.20087144582698
+  },
+  {
+    "continent": "South America",
+    "population_2022": 436816608,
+    "population_1970": 192947156,
+    "growth_percentage_1970_to_2022": 126.39183549303002
+  }
+]
+```
+
