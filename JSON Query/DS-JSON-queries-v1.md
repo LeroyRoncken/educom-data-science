@@ -1275,3 +1275,31 @@ jq -r '[
   ])
   | @csv' < DS-JSON-query-5-output.json > DS-JSON-query-5-output.csv
 ```
+
+
+### Opdracht 7
+Schrijf een query/verzin een oplossing die de data uit world-population.json omzet naar de volgende structuur:
+
+```
+jq '[.[] | {
+    rank: .rank,
+    cca3: .cca3,
+    country: .country,
+    capital: .capital,
+    continent: .continent,
+    population: [
+      { "year": 2022, "population": .population_2022 },
+      { "year": 2020, "population": .population_2020 },
+      { "year": 2015, "population": .population_2015 },
+      { "year": 2010, "population": .population_2010 },
+      { "year": 2000, "population": .population_2000 },
+      { "year": 1990, "population": .population_1990 },
+      { "year": 1980, "population": .population_1980 },
+      { "year": 1970, "population": .population_1970 }
+    ],
+    area_km2: .area_km2,
+    population_density: .population_density,
+    population_growth_rate: .population_growth_rate,
+    percentage_world_population: .percentage_world_population
+  }]' < world-population.json
+```
