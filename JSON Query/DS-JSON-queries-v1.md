@@ -4,7 +4,9 @@
 Zoals je in de manual kunt lezen, kun je ook rekenen in je queries. Schrijf een query die de bevolkingsdichtheid in 1970 voor ieder land berekent.
 
 ```
-jq ".[] | { country: .country, population_density_1970: (.population_1970 / .area_km2) }" < world-population.json > DS-JSON-query-1-output.json
+jq '[.[] | {
+  country: .country, population_density_1970: (.population_1970 / .area_km2)
+}]' < world-population.json > DS-JSON-query-1-output.json
 ```
 
 ```json
@@ -1198,3 +1200,78 @@ jq "
 ]
 ```
 
+
+### Opdracht 6
+Gebruik jq om een JSON-file naar een CSV-file om te zetten. Exporteer de resultaten van de vorige opdrachten naar CSV-bestanden.
+
+```
+jq -r '[
+    "country",
+    "population_density_1970"
+  ],
+  (.[] | [
+    .country,
+    .population_density_1970
+  ])
+  | @csv' < DS-JSON-query-1-output.json > DS-JSON-query-1-output.csv
+
+jq -r '[
+    "continent",
+    "growth"
+  ],
+  (.[] | [
+    .continent,
+    .growth
+  ])
+  | @csv' < DS-JSON-query-2-output.json > DS-JSON-query-2-output.csv
+
+jq -r '[
+    "continent",
+    "population_2022",
+    "population_2020",
+    "population_2015",
+    "population_2010",
+    "population_2000",
+    "population_1990",
+    "population_1980",
+    "population_1970"
+  ],
+  (.[] | [
+    .continent,
+    .population_2022,
+    .population_2020,
+    .population_2015,
+    .population_2010,
+    .population_2000,
+    .population_1990,
+    .population_1980,
+    .population_1970
+  ])
+  | @csv' < DS-JSON-query-3-output.json > DS-JSON-query-3-output.csv
+
+jq -r '[
+    "continent",
+    "population_2022",
+    "population_percentage_2022"
+  ],
+  (.[] | [
+    .continent,
+    .population_2022,
+    .population_percentage_2022
+  ])
+  | @csv' < DS-JSON-query-4-output.json > DS-JSON-query-4-output.csv
+
+jq -r '[
+    "continent",
+    "population_2022",
+    "population_1970",
+    "growth_percentage_1970_to_2022"
+  ],
+  (.[] | [
+    .continent,
+    .population_2022,
+    .population_1970,
+    .growth_percentage_1970_to_2022
+  ])
+  | @csv' < DS-JSON-query-5-output.json > DS-JSON-query-5-output.csv
+```
